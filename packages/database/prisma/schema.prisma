@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "prisma-client-js"
+  output     = "../.prisma/client"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+// example table used in the express router example (to be commented out when routes and everything else has be altered / deleted)
+model HighScore {
+  id    Int      @id @default(autoincrement())
+  time  DateTime
+  score Int
+}
+
+model Logged {
+  loggedID Int      @id @default(autoincrement())
+  outfitID Int
+  date     DateTime
+}
+
+// hamper date and pid
+// super peice with peice id and price, wears, wears since wash, date of wash
+// shirt
+// pant
+// saved, name and saded id
+
+model Outfit {
+  outfitID Int @id @default(autoincrement())
+  // Shirt Shirt? @relation("Shirt")
+  // Pant  Pant? @relation("Pant")
+}
