@@ -20,19 +20,62 @@ model HighScore {
 }
 
 model Logged {
-  loggedID Int      @id @default(autoincrement())
-  outfitID Int
+  Outfit   Outfit   @relation("Logged", fields: [outfitID], references: [outfitID])
+  outfitID Int      @id
   date     DateTime
 }
 
-// hamper date and pid
-// super peice with peice id and price, wears, wears since wash, date of wash
-// shirt
-// pant
-// saved, name and saded id
+model Hamper {
+  Peice     Peice    @relation("Dirty", fields: [peiceID], references: [peiceID])
+  peiceID   Int      @id
+  dateAdded DateTime
+}
+
+model Saved {
+  savedID  Int    @id @default(autoincrement())
+  outfitID Int    @unique
+  name     String
+
+  Outfit Outfit @relation("Saved", fields: [outfitID], references: [outfitID])
+}
 
 model Outfit {
   outfitID Int @id @default(autoincrement())
-  // Shirt Shirt? @relation("Shirt")
-  // Pant  Pant? @relation("Pant")
+  shirtID  Int @unique
+  pantsID  Int @unique
+
+  Logged Logged? @relation("Logged")
+  Saved  Saved?  @relation("Saved")
+
+  shirt Shirt? @relation("ShirtID", fields: [shirtID], references: [peiceID])
+  pants Pants? @relation("PantsID", fields: [pantsID], references: [peiceID])
+}
+
+model Peice {
+  peiceID        Int      @id @default(autoincrement())
+  price          Int
+  wears          Int
+  wearsSinceWash Int
+  lastWash       DateTime
+
+  Hamper Hamper? @relation("Dirty")
+
+  Shirt Shirt? @relation("Shirt")
+  Pants Pants? @relation("Pants")
+}
+
+model Shirt {
+  Peice   Peice  @relation("Shirt", fields: [peiceID], references: [peiceID])
+  peiceID Int    @id
+  Size    String
+
+  Outfit Outfit? @relation("ShirtID")
+}
+
+model Pants {
+  peiceID Int @id
+  waiste  Int
+
+  Peice  Peice   @relation("Pants", fields: [peiceID], references: [peiceID])
+  Outfit Outfit? @relation("PantsID")
 }
