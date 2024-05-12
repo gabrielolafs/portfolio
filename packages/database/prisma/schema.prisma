@@ -19,6 +19,7 @@ model HighScore {
   score Int
 }
 
+// dont delete lower, just the high score should be removed
 model Logged {
   Outfit   Outfit   @relation("Logged", fields: [outfitID], references: [outfitID])
   outfitID Int      @id
@@ -26,8 +27,8 @@ model Logged {
 }
 
 model Hamper {
-  Peice     Peice    @relation("Dirty", fields: [peiceID], references: [peiceID])
-  peiceID   Int      @id
+  Piece     Piece    @relation("Dirty", fields: [pieceID], references: [pieceID])
+  pieceID   Int      @id
   dateAdded DateTime
 }
 
@@ -47,12 +48,12 @@ model Outfit {
   Logged Logged? @relation("Logged")
   Saved  Saved?  @relation("Saved")
 
-  shirt Shirt? @relation("ShirtID", fields: [shirtID], references: [peiceID])
-  pants Pants? @relation("PantsID", fields: [pantsID], references: [peiceID])
+  shirt Shirt? @relation("ShirtID", fields: [shirtID], references: [pieceID])
+  pants Pants? @relation("PantsID", fields: [pantsID], references: [pieceID])
 }
 
-model Peice {
-  peiceID        Int      @id @default(autoincrement())
+model Piece {
+  pieceID        Int      @id @default(autoincrement())
   price          Int
   wears          Int
   wearsSinceWash Int
@@ -65,17 +66,17 @@ model Peice {
 }
 
 model Shirt {
-  Peice   Peice  @relation("Shirt", fields: [peiceID], references: [peiceID])
-  peiceID Int    @id
-  Size    String
+  Piece   Piece  @relation("Shirt", fields: [pieceID], references: [pieceID])
+  pieceID Int    @id
+  size    String
 
   Outfit Outfit? @relation("ShirtID")
 }
 
 model Pants {
-  peiceID Int @id
-  waiste  Int
+  pieceID Int @id
+  waist   Int
 
-  Peice  Peice   @relation("Pants", fields: [peiceID], references: [peiceID])
+  Piece  Piece   @relation("Pants", fields: [pieceID], references: [pieceID])
   Outfit Outfit? @relation("PantsID")
 }
