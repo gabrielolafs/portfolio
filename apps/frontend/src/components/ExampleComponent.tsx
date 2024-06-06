@@ -1,10 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
+import { Shirt } from "../../../../packages/common/src/cloths";
 
 //this is a basic counter component to show where components should be placed
 export function ExampleComponent() {
   //saves the count
   const [count, setCount] = useState(0);
+  const [shirt, setShirt] = useState<Shirt>({
+    pieceID: 1,
+    name: "named",
+    price: 23,
+    wears: 33,
+    wearsSinceWash: 1,
+    lastWash: "washed",
+  });
 
   //submits the count as a high score
   async function submitHighscore() {
@@ -23,6 +32,21 @@ export function ExampleComponent() {
       console.log("added highscore");
     }
   }
+
+  // made code for the testing of pushes
+  async function submitShirt() {
+    //sends a post request the /api/high-score
+    // e.preventDefault();
+    try {
+      const response = await axios.post("/api/piece/shirt", shirt);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Unable to create form");
+      console.log(error);
+    }
+    setShirt({});
+  }
+
   //the html returned from the component
   return (
     <div className={"example-component w-fit flex flex-col gap-5 px-5"}>
@@ -38,6 +62,13 @@ export function ExampleComponent() {
       <button
         onClick={() => {
           submitHighscore().then();
+        }}
+      >
+        Submit
+      </button>
+      <button
+        onClick={() => {
+          submitShirt().then();
         }}
       >
         Submit

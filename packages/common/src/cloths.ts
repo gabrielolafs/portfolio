@@ -28,6 +28,7 @@ export interface Hamper {
 // If changed: Make sure to also edit Outfit
 export interface Piece {
   pieceID: number;
+  name: string;
   price: number;
   wears: number;
   wearsSinceWash: number;

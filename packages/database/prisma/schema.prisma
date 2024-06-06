@@ -19,64 +19,116 @@ model HighScore {
   score Int
 }
 
-// dont delete lower, just the high score should be removed
-model Logged {
-  Outfit   Outfit   @relation("Logged", fields: [outfitID], references: [outfitID])
-  outfitID Int      @id
-  date     DateTime
-}
-
-model Hamper {
-  Piece     Piece    @relation("Dirty", fields: [pieceID], references: [pieceID])
-  pieceID   Int      @id
-  dateAdded DateTime
-}
-
-model Saved {
-  savedID  Int    @id @default(autoincrement())
-  outfitID Int    @unique
-  name     String
-
-  Outfit Outfit @relation("Saved", fields: [outfitID], references: [outfitID])
-}
-
-model Outfit {
-  outfitID Int @id @default(autoincrement())
-  shirtID  Int @unique
-  pantsID  Int @unique
-
-  Logged Logged? @relation("Logged")
-  Saved  Saved?  @relation("Saved")
-
-  shirt Shirt? @relation("ShirtID", fields: [shirtID], references: [pieceID])
-  pants Pants? @relation("PantsID", fields: [pantsID], references: [pieceID])
-}
-
 model Piece {
-  pieceID        Int      @id @default(autoincrement())
+  pieceID        Int    @id @default(autoincrement())
+  name           String
   price          Int
   wears          Int
   wearsSinceWash Int
-  lastWash       DateTime
-
-  Hamper Hamper? @relation("Dirty")
+  lastWash       String
 
   Shirt Shirt? @relation("Shirt")
-  Pants Pants? @relation("Pants")
 }
 
 model Shirt {
   Piece   Piece  @relation("Shirt", fields: [pieceID], references: [pieceID])
   pieceID Int    @id
   size    String
-
-  Outfit Outfit? @relation("ShirtID")
 }
 
-model Pants {
-  pieceID Int @id
-  waist   Int
+// simplified the table for testing
 
-  Piece  Piece   @relation("Pants", fields: [pieceID], references: [pieceID])
-  Outfit Outfit? @relation("PantsID")
-}
+//
+// // dont delete lower, just the high score should be removed
+// model Logged {
+//   Outfit   Outfit   @relation("Logged", fields: [outfitID], references: [outfitID])
+//   outfitID Int      @id
+//   date     DateTime
+// }
+//
+// model Hamper {
+//   Piece     Piece    @relation("Dirty", fields: [pieceID], references: [pieceID])
+//   pieceID   Int      @id
+//   dateAdded DateTime
+// }
+//
+// model Saved {
+//   savedID  Int    @id @default(autoincrement())
+//   outfitID Int    @unique
+//   name     String
+//
+//   Outfit Outfit @relation("Saved", fields: [outfitID], references: [outfitID])
+// }
+//
+// model Outfit {
+//   outfitID Int @id @default(autoincrement())
+//   shirtID  Int @unique
+//   pantsID  Int @unique
+//
+//   Logged Logged? @relation("Logged")
+//   Saved  Saved?  @relation("Saved")
+//
+//   shirt Shirt? @relation("ShirtID", fields: [shirtID], references: [pieceID])
+//   pants Pants? @relation("PantsID", fields: [pantsID], references: [pieceID])
+// }
+//
+// model Piece {
+//   pieceID        Int      @id @default(autoincrement())
+//   name           String
+//   price          Int
+//   wears          Int
+//   wearsSinceWash Int
+//   lastWash       DateTime
+//
+//   Hamper Hamper? @relation("Dirty")
+//
+//   Shirt Shirt? @relation("Shirt")
+//   Pants Pants? @relation("Pants")
+// }
+//
+// model Shirt {
+//   Piece   Piece  @relation("Shirt", fields: [pieceID], references: [pieceID])
+//   pieceID Int    @id
+//   size    String
+//
+//   Outfit Outfit? @relation("ShirtID")
+// }
+//
+// model Pants {
+//   pieceID Int @id
+//   waist   Int
+//
+//   Piece  Piece   @relation("Pants", fields: [pieceID], references: [pieceID])
+//   Outfit Outfit? @relation("PantsID")
+// }
+
+// model SockStyle {
+//   brand String
+//   count Int
+// }
+//
+// model Socks {
+// }
+
+// Planning out the way the id numbers will work:
+//
+// AAAA
+// 1111
+//
+// First number will be the item catagory ex shirts 0, socks 15 (f in hex)
+// A000
+// 0000
+//
+// Following 3 will be an apox of the the rgb values. instead of being 6 hex numbers long, I floor devide by 16 so that it
+// will only take up 1. This is something that I will still have to works shop tho, an example of why this would be bad is
+// that if we order by just the number in increasing order, if i were to put away a very dark red shirt, it would be in the
+// middle of many black ones. there must be a way to sub orginize them further that I am just not thinking of.
+// 0AAA
+// 0000
+//
+// The final 4 numbers are decials that is going to be the way that I am going to be refering to most of them anyway. Key
+// that these are not hex as that would be very make this harder to id. I aknowledge that this does cut the number of
+// usable numbers from a potential 65k to 1k, but i think if i get to the point that I need more than 1 thousand shirts, I
+// might have a problem
+// 0000
+// 1111
