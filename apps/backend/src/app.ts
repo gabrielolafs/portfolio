@@ -2,9 +2,6 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import exampleRouter from "./routes/example.ts";
-// routers for peice cats
-import shirtRouter from "./routes/clothing/peices/shirtRouter";
 
 const app: Express = express(); // Setup the backend
 
@@ -23,13 +20,11 @@ app.use(cookieParser()); // Cookie parser
 
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
-app.use("/api/high-score", exampleRouter);
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
 
 // routes for the piece routers
-app.use("/api/piece/shirt", shirtRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
