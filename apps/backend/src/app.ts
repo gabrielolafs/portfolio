@@ -24,8 +24,6 @@ app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
 
-// routes for the piece routers
-
 /**
  * Catch all 404 errors, and forward them to the error handler
  */

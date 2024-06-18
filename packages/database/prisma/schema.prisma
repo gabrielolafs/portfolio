@@ -12,28 +12,43 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-// example table used in the express router example (to be commented out when routes and everything else has be altered / deleted)
-model HighScore {
-  id    Int      @id @default(autoincrement())
-  time  DateTime
-  score Int
+model Network {
+  networkID String    @id
+  name      String
+  Cabinet   Cabinet[]
 }
 
-model Piece {
-  pieceID        Int    @id @default(autoincrement())
-  name           String
-  price          Int
-  wears          Int
-  wearsSinceWash Int
-  lastWash       String
-
-  Shirt Shirt? @relation("Shirt")
+model Cabinet {
+  cabinetID String  @id
+  networkID String
+  Network   Network @relation(fields: [networkID], references: [networkID])
+  Rack      Rack[]
 }
 
-model Shirt {
-  Piece   Piece  @relation("Shirt", fields: [pieceID], references: [pieceID])
-  pieceID Int    @id
-  size    String
+model Rack {
+  rackID     String   @id // derived from `${cabinetID}-${rackNumber}`
+  rackNumber Int
+  cabinetID  String
+  Cabinet    Cabinet  @relation(fields: [cabinetID], references: [cabinetID])
+  Device     Device[]
+}
+
+model Device {
+  deviceID   String       @id // derived from `${rackID}-${deviceNumber}`
+  name       String
+  rackID     String
+  Rack       Rack         @relation(fields: [rackID], references: [rackID])
+  Connection Connection[]
+}
+
+// i dont know how to do this yet, but ill keep thinking while i work to make other things work
+model Connection {
+  connectionID String @id
+  deviceID     String
+  portInfo     String
+  portNumber   Int
+  description  String // `Connected to ${deviceID}'s ${portInfo}${portNumber}`
+  Device       Device @relation(fields: [deviceID], references: [deviceID])
 }
 
 // simplified the table for testing
