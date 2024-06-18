@@ -2,11 +2,20 @@
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 7.5vh;
   background-color: #c1c1c1;
+  color: #000000;
 }
 
-.navbarCustom .navbarBrand,
+.navbarCustom .navbarBrand {
+  padding-left: 2vw;
+  font-weight: 700;
+}
+
 .navbarCustom .navLink {
-  color: #f5f5f5;
+  color: #000000;
+  transition: background-color 0.5s ease; /* Add transition for smooth effect */
+}
+
+.navbarCustom .navLink:hover {
+  background-color: #e9ecef; /* Change background color on hover */
 }

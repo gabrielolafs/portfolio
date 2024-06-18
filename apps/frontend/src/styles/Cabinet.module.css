@@ -1,8 +1,7 @@
 .pageContainer {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  min-height: calc(100vh - 7.5vh);
+  min-height: calc(100vh - 56px);
   background-color: #1c1c1c;
   color: #f5f5f5;
 }
@@ -21,6 +20,7 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+
 .queryContainerBody {
   font-family: "Courier New", Consolas, Monaco, "Lucida Console", monospace;
   font-size: 1em;
