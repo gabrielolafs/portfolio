@@ -26,11 +26,12 @@ model Cabinet {
 }
 
 model Rack {
-  rackID     String   @id // derived from `${cabinetID}-${rackNumber}`
-  rackNumber Int
-  cabinetID  String
-  Cabinet    Cabinet  @relation(fields: [cabinetID], references: [cabinetID])
-  Device     Device[]
+  rackID             String   @id // derived from `${cabinetID}-${rackNumber}`
+  cabinetID          String
+  bottomMostRackUnit Int
+  numberOfRackUnits  Int
+  Cabinet            Cabinet  @relation(fields: [cabinetID], references: [cabinetID])
+  Device             Device[]
 }
 
 model Device {

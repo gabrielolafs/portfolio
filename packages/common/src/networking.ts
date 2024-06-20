@@ -1,31 +1,31 @@
 // Building a network inventory system.
 
 export interface Network {
-  Location: string;
+  networkID: string; // Primary Key
+  name: string;
 }
 
 export interface Cabinet {
-  CabinetID: string;
+  cabinetID: string; // Primary Key
+  networkID: string; // Foreign Key
 }
 
 export interface Rack {
-  RackID: number; // Primary Key
-  CabinetID: number; // Foreign Key and part of the Primary Key
+  rackID: number; // Primary Key
+  cabinetID: number; // Foreign Key and part of the Primary Key
   // kinda want a string of cabinet id and rack id ex.
-  NumberOfRackUnits: number;
+  bottomMostRackUnit: number;
+  numberOfRackUnits: number;
 }
 
 export interface Device {
-  DeviceID: number; // Primary Key
-  RackID: number; // Foreign Key
-  CabinetID: number;
-
-  DeviceType: string;
-  DeviceMake: string;
-  DeviceModel: string;
-  DeviceSerial: string;
-  DeviceAsset: string;
-  DeviceLocation: string;
-  DeviceOwner: string;
-  DeviceStatus: string;
+  deviceID: number; // Primary Key
+  rackID: number; // Foreign Key
+  name: string;
 }
+
+// export interface NetworkPort {
+//   portID: number; // Primary Key
+//   deviceID: number; // Foreign Key
+//   portNumber: number;
+// }

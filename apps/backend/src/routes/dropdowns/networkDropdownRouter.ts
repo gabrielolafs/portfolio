@@ -1,6 +1,6 @@
-// flower service request router
 import express, { Router } from "express";
-import PrismaClient from "../bin/database-connection.ts";
+import PrismaClient from "../../bin/database-connection.ts";
+// import { Network } from "common/src/networking.ts";
 
 const router: Router = express.Router();
 
@@ -15,5 +15,3 @@ router.get("/", async function (req, res) {
   });
   res.json(networks);
 });
-
-export default router;

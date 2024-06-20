@@ -7,7 +7,6 @@ const Cabinet = () => {
   return (
     <>
       <div className={styles.pageContainer}>
-        <p> HI THERE </p>
         <Rack />
       </div>
     </>
