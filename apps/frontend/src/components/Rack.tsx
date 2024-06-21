@@ -2,6 +2,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/Rack.module.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+import Empty from "./devices/Empty";
+
 // import { useEffect, useState } from "react";
 interface RackProps {
   num: number;
@@ -145,7 +148,7 @@ const Rack: React.FC<RackProps> = ({ num, rackID }) => {
         const newDeviceNames = [];
         const newDeviceStyles = [];
 
-        for (let i = 0; i < 45; i++) {
+        for (let i = 44; i >= 0; i--) {
           const device = devices.find(
             (d: { bottomURack: number }) => d.bottomURack === i + 1,
           );
@@ -185,10 +188,12 @@ const Rack: React.FC<RackProps> = ({ num, rackID }) => {
     <>
       <div className={styles.pageContainer}>
         <div className={styles.rackContainer}>
+          <Empty />
           <div className={styles.pageTitle}>
             <p>Rack {num}</p>
           </div>
           <div>{rackUnits}</div>
+          <Empty />
         </div>
       </div>
     </>
