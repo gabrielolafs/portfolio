@@ -12,9 +12,8 @@ export interface Cabinet {
 
 export interface Rack {
   rackID: number; // Primary Key
-  cabinetID: number; // Foreign Key and part of the Primary Key
-  // kinda want a string of cabinet id and rack id ex.
-  bottomMostRackUnit: number;
+  rackNumber: number;
+  cabinetID: string; // Foreign Key and part of the Primary Key
   numberOfRackUnits: number;
 }
 
@@ -22,6 +21,8 @@ export interface Device {
   deviceID: number; // Primary Key
   rackID: number; // Foreign Key
   name: string;
+  URacksUsed: number;
+  bottomURack: number;
 }
 
 // export interface NetworkPort {

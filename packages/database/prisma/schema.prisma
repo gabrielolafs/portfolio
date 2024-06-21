@@ -20,26 +20,29 @@ model Network {
 
 model Cabinet {
   cabinetID String  @id
+  name      String
   networkID String
   Network   Network @relation(fields: [networkID], references: [networkID])
   Rack      Rack[]
 }
 
 model Rack {
-  rackID             String   @id // derived from `${cabinetID}-${rackNumber}`
-  cabinetID          String
-  bottomMostRackUnit Int
-  numberOfRackUnits  Int
-  Cabinet            Cabinet  @relation(fields: [cabinetID], references: [cabinetID])
-  Device             Device[]
+  rackID            String   @id // derived from `${cabinetID}-${rackNumber}`
+  rackNumber        Int
+  cabinetID         String
+  numberOfRackUnits Int
+  Cabinet           Cabinet  @relation(fields: [cabinetID], references: [cabinetID])
+  Device            Device[]
 }
 
 model Device {
-  deviceID   String       @id // derived from `${rackID}-${deviceNumber}`
-  name       String
-  rackID     String
-  Rack       Rack         @relation(fields: [rackID], references: [rackID])
-  Connection Connection[]
+  deviceID    String       @id // derived from `${rackID}-${deviceNumber}`
+  name        String
+  rackID      String
+  URacksUsed  Int
+  bottomURack Int // nullable on the bases of single u rack devices
+  Rack        Rack         @relation(fields: [rackID], references: [rackID])
+  Connection  Connection[]
 }
 
 // i dont know how to do this yet, but ill keep thinking while i work to make other things work

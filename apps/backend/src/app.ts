@@ -5,6 +5,9 @@ import logger from "morgan";
 
 const app: Express = express(); // Setup the backend
 
+import RackGetter from "./routes/cabinet/RackGetter";
+import DeviceGetter from "./routes/cabinet/DeviceGetter";
+
 // Setup generic middlewear
 app.use(
   logger("dev", {
@@ -23,6 +26,9 @@ app.use(cookieParser()); // Cookie parser
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
+
+app.use("/api/cabinet/rack-getter", RackGetter);
+app.use("/api/cabinet/device-getter", DeviceGetter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
